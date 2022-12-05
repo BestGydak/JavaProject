@@ -1,4 +1,9 @@
 package Course;
 
-public class TaskType {
+public enum TaskType
+{
+    ACTIVITY,
+    EXERCISE,
+    SEMINAR,
+    HOMEWORK
 }
