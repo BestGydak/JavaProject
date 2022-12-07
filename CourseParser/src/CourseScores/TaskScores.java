@@ -13,17 +13,23 @@ public class TaskScores {
 
     public void setScore(int value)
     {
+
         if(value < 0){
             throw new IllegalArgumentException("Score can't be less than zero!");
         }
-        if(value > Task.MaxScore)
-        {
-            throw new IllegalArgumentException("Score can't be greater than max score of the task!");
+        if(value > Task.MaxScore) {
+            throw new IllegalArgumentException("Score can't be greater than max score of the task!" + " " + Task + " value: " + value);
         }
         score = value;
     }
 
     public int getScore(){
         return score;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("TaskScores (%s):\n" +
+                "score: %s", Task, getScore());
     }
 }

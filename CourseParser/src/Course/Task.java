@@ -3,12 +3,15 @@ package Course;
 public class Task {
     public final TaskType Type;
     public final String Name;
-    public final Module Module;
     public final int MaxScore;
-    public Task(Module module, TaskType type, String name, int maxScore) {
+    public Task(TaskType type, String name, int maxScore) {
         Type = type;
         Name = name;
-        Module = module;
         MaxScore = maxScore;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Task (%s, type: %s, max score: %s)", Name, Type.name(), MaxScore);
     }
 }

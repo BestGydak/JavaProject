@@ -5,5 +5,6 @@ public enum TaskType
     ACTIVITY,
     EXERCISE,
     SEMINAR,
-    HOMEWORK
+    HOMEWORK,
+    BONUS
 }
