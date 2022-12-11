@@ -31,10 +31,11 @@ public class CourseSheetParser {
         var maxScores = Arrays.stream(lines.get(2).split(";")).skip(2).toList();
         var course = createNewCourse(courseName, moduleNames, columnNames, maxScores);
         var students = new ArrayList<Student>();
-        for(var i = 3; i < 20; i++){
+        for(var i = 3; i < lines.size(); i++){
             var studentInfo = lines.get(i).split(";");
             var studentScores = Arrays.stream(studentInfo).skip(2).toList();
-            var student = createNewStudent(studentInfo, course, moduleNames, columnNames);
+            var student = createNewStudent(studentInfo);
+            //System.out.println(student);
             var courseScores = createCourseScores(course, moduleNames, columnNames, studentScores);
             student.AssignedCourseScores.add(courseScores);
             students.add(student);
@@ -42,20 +43,19 @@ public class CourseSheetParser {
         return students;
     }
 
-    private Student createNewStudent(String[] studentInfo, Course course, List<String> moduleNames, List<String> columnNames){
+    private Student createNewStudent(String[] studentInfo){
         var fullName = studentInfo[0].split(" ", 2);
         var name = fullName[0];
         var surname = "";
         if(fullName.length > 1) surname = fullName[1];
         var group = studentInfo[1];
         var vkUserInfo = vk.getUserInfo(studentInfo[0]);
-        var dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return new Student(name,
                 surname,
                 vkUserInfo.get("Sex"),
                 vkUserInfo.get("Phone"),
                 vkUserInfo.get("Hometown"),
-                LocalDate.parse(vkUserInfo.get("BDate"), dateFormat),
+                vkUserInfo.get("BDate"),
                 group);
     }
 
@@ -65,7 +65,7 @@ public class CourseSheetParser {
                                          List<String> maxScores){
         var courseBuilder = new CourseBuilder();
         courseBuilder.Name = courseName;
-        for(var i = 0;i < 4; i++){
+        for(var i = 0; i < 4; i++){
             switch(convertStringToTaskType(columnNames.get(i))){
                 case HOMEWORK -> courseBuilder.MaxHomeWorkScore = Integer.parseInt(maxScores.get(i));
                 case SEMINAR -> courseBuilder.MaxSeminarScore = Integer.parseInt(maxScores.get(i));
@@ -100,7 +100,6 @@ public class CourseSheetParser {
                     moduleBuilder.Name = moduleName;
                 }
             }
-            //System.out.println(columnNames.get(i));
             var taskInfo = columnNames.get(i).split(": ");
             var taskType = convertStringToTaskType(taskInfo[0]);
             if (taskInfo.length == 1){

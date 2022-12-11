@@ -14,6 +14,8 @@ public class VkConnector {
     private final VkApiClient vk;
     private final UserActor actor;
 
+    private final int sleepTime = 300;
+
     public VkConnector(int id, String accessToken){
 
         TransportClient transportClient = new HttpTransportClient();
@@ -21,7 +23,7 @@ public class VkConnector {
         actor = new UserActor(id, accessToken);
     }
 
-    public HashMap<String, String> getUserInfo(String fullName){
+    public HashMap<String, String> getUserInfo(String fullName) {
         try {
             var user = vk
                     .users()
@@ -38,15 +40,22 @@ public class VkConnector {
             userInfo.put("Hometown", user.getHomeTown());
             userInfo.put("Phone", user.getMobilePhone());
             userInfo.put("BDate", user.getBdate());
-            Thread.sleep(6000);
+            Thread.sleep(sleepTime);
             return userInfo;
         }
-        catch (Exception ignore){}
+        catch (Exception ignore){
+            try {
+                Thread.sleep(sleepTime);
+            }
+            catch (InterruptedException e){
+                throw new RuntimeException();
+            }
+        }
         var nullHashMap = new HashMap<String, String>();
         nullHashMap.put("Sex", "unknown");
         nullHashMap.put("Hometown", "unknown");
         nullHashMap.put("Phone", "unknown");
-        nullHashMap.put("BDate", "01.01.1970");
+        nullHashMap.put("BDate", "unknown");
         return nullHashMap;
     }
 }

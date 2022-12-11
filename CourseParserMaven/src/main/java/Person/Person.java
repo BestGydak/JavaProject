@@ -8,9 +8,9 @@ public class Person {
     public final String Gender;
     public final String PhoneNumber;
     public final String HomeTown;
-    public final LocalDate BirthDate;
+    public final String BirthDate;
 
-    public Person(String name, String surname, String gender, String phone, String homeTown, LocalDate birthDate) {
+    public Person(String name, String surname, String gender, String phone, String homeTown, String birthDate) {
         Name = name;
         Surname = surname;
         Gender = gender;
