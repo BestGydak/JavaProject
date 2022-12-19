@@ -36,8 +36,7 @@ public class CourseSheetParser {
             var studentScores = Arrays.stream(studentInfo).skip(2).toList();
             var student = createNewStudent(studentInfo);
             //System.out.println(student);
-            var courseScores = createCourseScores(course, moduleNames, columnNames, studentScores);
-            student.AssignedCourseScores.add(courseScores);
+            student.AssignedCourseScores = createCourseScores(course, moduleNames, columnNames, studentScores);
             students.add(student);
         }
         return students;

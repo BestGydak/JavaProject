@@ -13,6 +13,8 @@ public class Module {
     public final int MaxSeminarScore;
     public final int MaxBonusScore;
 
+    public final int MaxFullScore;
+
     public Module(String name, ArrayList<Task> tasks
             , int maxActivityScore, int maxExerciseScore, int maxHomeWorkScore, int maxSeminarScore, int maxBonusScore) {
         Tasks = Collections.unmodifiableList(tasks);
@@ -21,6 +23,7 @@ public class Module {
         MaxExerciseScore = maxExerciseScore;
         MaxSeminarScore = maxSeminarScore;
         MaxBonusScore = maxBonusScore;
+        MaxFullScore = maxActivityScore + maxHomeWorkScore + maxExerciseScore + maxSeminarScore + maxBonusScore;
         Name = name;
     }
 

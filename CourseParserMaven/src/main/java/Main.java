@@ -1,4 +1,5 @@
 import CSVParser.CourseSheetParser;
+import ChartCreator.ChartCreator;
 import VkUtils.VkConnector;
 
 import java.io.IOException;
@@ -13,9 +14,14 @@ public class Main {
         var token = sc.nextLine();
         var vkParser = new VkConnector(id, token);
         var CSParser = new CourseSheetParser(vkParser);
-        var students = CSParser.parseCourseSheet("Сишарпик", "src/main/resources/new.csv");
-        for(var s : students){
-            System.out.println(s);
-        }
+        var students = CSParser.parseCourseSheet("Сишарпик",
+                "src/main/resources/basicprogramming_3.csv");
+        ChartCreator.boysGirlsChart(students);
+        ChartCreator.HomeTownChart(students);
+        ChartCreator.averageModulePerformanceChart(students);
+        ChartCreator.performanceChart(students);
+        ChartCreator.BoysGirlsPerformanceChart(students);
+        ChartCreator.GroupsChart(students);
+        ChartCreator.ExerciseHomeWorkChart(students);
     }
 }
