@@ -10,11 +10,11 @@ import org.apache.commons.lang3.tuple.Triple;
 import java.util.HashMap;
 
 public class VkConnector {
-    private final int urfuGroup = 215509427;// 22941070;
+    private final int urfuGroup = 22941070;
     private final VkApiClient vk;
     private final UserActor actor;
 
-    private final int sleepTime = 300;
+    private final int sleepTime = 1000;
 
     public VkConnector(int id, String accessToken){
 
@@ -24,7 +24,7 @@ public class VkConnector {
     }
 
     public HashMap<String, String> getUserInfo(String fullName) {
-        /*try {
+        try {
             System.out.println("Trying to connect! " +fullName);
             var user = vk
                     .users()
@@ -41,20 +41,19 @@ public class VkConnector {
             userInfo.put("Hometown", user.getHomeTown());
             userInfo.put("Phone", user.getMobilePhone());
             userInfo.put("BDate", user.getBdate());
-            System.out.println("LET'S GOOO!!!");
+            System.out.println(fullName + "LET'S GOOO!!!");
             Thread.sleep(sleepTime);
             return userInfo;
         }
-        catch (Exception ignore){
+        catch (Exception e){
             try {
-
-                System.out.println("IGNORED!" + ignore.toString());
+                System.out.println("IGNORED!" + e.toString());
                 Thread.sleep(sleepTime);
             }
-            catch (InterruptedException e){
+            catch (InterruptedException e2){
                 throw new RuntimeException();
             }
-        }*/
+        }
         var nullHashMap = new HashMap<String, String>();
         nullHashMap.put("Sex", "unknown");
         nullHashMap.put("Hometown", "unknown");

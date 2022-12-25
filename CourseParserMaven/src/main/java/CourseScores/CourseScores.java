@@ -41,12 +41,15 @@ public class CourseScores {
         return homeworksScore;
     }
 
+
     public int getSeminarsScore() {
         return seminarsScore;
     }
+
     public int getBonusScore(){
         return bonusScore;
     }
+
     public int getFullScore() {
         return getActivitiesScore() + getExercisesScore() + getHomeworksScore() + getSeminarsScore() + getBonusScore();
     }

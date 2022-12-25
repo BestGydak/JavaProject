@@ -2,8 +2,6 @@ package Person;
 
 import CourseScores.CourseScores;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Student extends Person {
     public final String GroupName;

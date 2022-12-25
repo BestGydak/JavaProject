@@ -12,7 +12,6 @@ import org.jfree.chart.ChartUtils;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,7 +120,7 @@ public class ChartCreator {
         }
 
         var chart = ChartFactory.createBarChart(
-                "Успеваемость по блокам",
+                "Успеваемость по модулям",
                 "Модули",
                 "Успеваемость",
                 dataset);
