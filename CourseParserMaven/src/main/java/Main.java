@@ -11,11 +11,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException, SQLException {
         var sc = new Scanner(System.in);
-        System.out.println("Выберите комманду: \n" +
-                "1) наполнить БАЗУ \n" +
-                "2) создать графики");
+        System.out.println("Выберите команду: \n" +
+                "1) Создать новую базу данных \n" +
+                "2) Создать графики по существующей базе");
         var mode = sc.nextLine();
         if(mode.equals("1")){
+
+            System.out.print("Введите название .csv файла: ");
+            var csvFileName = sc.nextLine();
             System.out.print("Введите название базы данных: ");
             var dbName = sc.nextLine();
             System.out.print("Введите id: ");
@@ -25,7 +28,7 @@ public class Main {
             var vkParser = new VkConnector(id, token);
             var CSParser = new CourseSheetParser(vkParser);
             var students = CSParser.parseCourseSheet("CSHARP",
-                    "src/main/resources/basicprogramming_3.csv");
+                    csvFileName);
             var course = students.get(0).AssignedCourseScores.Course;
             //System.out.println(course.getFullInfo());
             var sqlFiller = new SQLCourseFiller(dbName);
@@ -46,7 +49,10 @@ public class Main {
             ChartCreator.exerciseHomeWorkChart(co);
             ChartCreator.performanceChartByType(co, "У1");
             ChartCreator.performanceChartByType(co, "У2");
+            ChartCreator.homeworkExercisePerformance(co);
         }
 
     }
+
+
 }

@@ -83,6 +83,8 @@ public class ChartCreator {
                     "Численность",
                     dataset);
             chart.getLegend().setHeight(1000);
+            BarRenderer renderer = (BarRenderer) chart.getCategoryPlot().getRenderer();
+            renderer.setItemMargin(-5);
             createPNGChart(chart, "towns.png", 2000, 500);
         }
         catch (Exception e){
@@ -301,6 +303,56 @@ public class ChartCreator {
             BarRenderer renderer = (BarRenderer) chart.getCategoryPlot().getRenderer();
             renderer.setItemMargin(-10);
             createPNGChart(chart, "groupPerformance.png", 2000, 1000);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            for(var trace: e.getStackTrace()){
+                System.out.println(trace);
+            }
+            throw new RuntimeException();
+        }
+    }
+
+    public static void homeworkExercisePerformance(Connection co){
+        try{
+            var dataset = new DefaultCategoryDataset();
+            var moduleIdSt = co.createStatement();
+            var moduleIdRs = moduleIdSt.executeQuery("SELECT module_id, exercise_score, homework_score, name FROM modulesInfo");
+            while(moduleIdRs.next()){
+                var moduleId = moduleIdRs.getInt("module_id");
+                var moduleName = moduleIdRs.getString("name");
+                var maxHomeworkScore = moduleIdRs.getInt("homework_score");
+                var maxExerciseScore = moduleIdRs.getInt("exercise_score");
+
+                double sumHomeworkPerformance = 0;
+                double sumExercisePerformance = 0;
+
+                var count = 0;
+
+                var scoresSt = co.createStatement();
+                var scoresRs = scoresSt.executeQuery("SELECT exercise_score, homework_score FROM modulesScoresInfo " +
+                        "WHERE module_id = " + moduleId);
+                while(scoresRs.next()){
+                    sumHomeworkPerformance += (double) scoresRs.getInt("homework_score") / maxHomeworkScore * 100;
+                    sumExercisePerformance += (double) scoresRs.getInt("exercise_score") / maxExerciseScore * 100;
+                    count += 1;
+                }
+                scoresRs.close();
+                scoresSt.close();
+
+                var homeworkPerformance = sumHomeworkPerformance / count;
+                var exercisePerformance = sumExercisePerformance / count;
+
+                dataset.addValue(homeworkPerformance, "Домашняя работа", moduleName);
+                dataset.addValue(exercisePerformance,"Упражнение", moduleName);
+            }
+
+            var chart = ChartFactory.createBarChart("Успеваемость студентов по упражнениям/практикам",
+                    "Модуль",
+                    "Успеваемость",
+                    dataset);
+
+            createPNGChart(chart, "homeworkExercisePerformance.png", 2000, 1000);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
