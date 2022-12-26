@@ -14,7 +14,7 @@ public class VkConnector {
     private final VkApiClient vk;
     private final UserActor actor;
 
-    private final int sleepTime = 1000;
+    private final int sleepTime = 300;
 
     public VkConnector(int id, String accessToken){
 
@@ -25,7 +25,7 @@ public class VkConnector {
 
     public HashMap<String, String> getUserInfo(String fullName) {
         try {
-            System.out.println("Trying to connect! " +fullName);
+            System.out.println("Trying to connect! " + fullName);
             var user = vk
                     .users()
                     .search(actor)
@@ -41,13 +41,12 @@ public class VkConnector {
             userInfo.put("Hometown", user.getHomeTown());
             userInfo.put("Phone", user.getMobilePhone());
             userInfo.put("BDate", user.getBdate());
-            System.out.println(fullName + "LET'S GOOO!!!");
             Thread.sleep(sleepTime);
             return userInfo;
         }
         catch (Exception e){
             try {
-                System.out.println("IGNORED!" + e.toString());
+                System.out.println("IGNORED! " + e.toString());
                 Thread.sleep(sleepTime);
             }
             catch (InterruptedException e2){
